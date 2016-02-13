@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -25,4 +29,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
+    compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.2'
 }
