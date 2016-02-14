@@ -6,9 +6,9 @@ import android.os.Parcelable;
 import java.util.Date;
 
 /**
- * Time item
+ * Timer item
  */
-public class Time implements Parcelable {
+public class Timer implements Parcelable {
     private long id;
     private Task task;
     private Date startTime;
@@ -50,9 +50,9 @@ public class Time implements Parcelable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Time)) return false;
+        if (!(o instanceof Timer)) return false;
 
-        Time time = (Time) o;
+        Timer time = (Timer) o;
 
         if (id != time.id) return false;
         if (!task.equals(time.task)) return false;
@@ -70,7 +70,7 @@ public class Time implements Parcelable {
         return result;
     }
 
-    protected Time(Parcel in) {
+    protected Timer(Parcel in) {
         id = in.readLong();
         task = (Task) in.readValue(Task.class.getClassLoader());
         long tmpStartTime = in.readLong();
@@ -93,15 +93,15 @@ public class Time implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Time> CREATOR = new Parcelable.Creator<Time>() {
+    public static final Parcelable.Creator<Timer> CREATOR = new Parcelable.Creator<Timer>() {
         @Override
-        public Time createFromParcel(Parcel in) {
-            return new Time(in);
+        public Timer createFromParcel(Parcel in) {
+            return new Timer(in);
         }
 
         @Override
-        public Time[] newArray(int size) {
-            return new Time[size];
+        public Timer[] newArray(int size) {
+            return new Timer[size];
         }
     };
 }
