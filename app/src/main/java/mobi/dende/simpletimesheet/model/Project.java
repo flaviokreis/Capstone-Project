@@ -17,6 +17,9 @@ public class Project implements Parcelable {
     private Date insertedDate;
     private Date updatedDate;
 
+    public Project(){
+
+    }
 
     public long getId() {
         return id;

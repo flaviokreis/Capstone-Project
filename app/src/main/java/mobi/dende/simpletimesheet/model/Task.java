@@ -17,6 +17,18 @@ public class Task implements Parcelable {
     private Date insertedDate;
     private Date updatedDate;
 
+    public Task(){
+
+    }
+
+    //To create special button
+    public Task(Project project){
+        this.project = project;
+        this.color = project.getColor();
+        this.name = "+ Add Task"; //TODO add on Strings
+        this.id = -1;
+    }
+
     public long getId() {
         return id;
     }
