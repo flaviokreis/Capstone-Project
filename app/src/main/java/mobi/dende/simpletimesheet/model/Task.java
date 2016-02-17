@@ -147,4 +147,17 @@ public class Task implements Parcelable {
             return new Task[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", project=" + project +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", color=" + color +
+                ", insertedDate=" + insertedDate +
+                ", updatedDate=" + updatedDate +
+                '}';
+    }
 }

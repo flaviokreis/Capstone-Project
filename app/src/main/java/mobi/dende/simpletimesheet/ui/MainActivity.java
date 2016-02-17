@@ -3,12 +3,15 @@ package mobi.dende.simpletimesheet.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
 import mobi.dende.simpletimesheet.R;
+import mobi.dende.simpletimesheet.model.Project;
+import mobi.dende.simpletimesheet.model.Task;
 import mobi.dende.simpletimesheet.ui.fragment.ProjectFragment;
 
 public class MainActivity extends AppCompatActivity implements OnProjectScreenListener {
@@ -39,23 +42,35 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO create a add project dialog
+                DialogFragment dialog = new CreateProjectDialog();
+                ((CreateProjectDialog)dialog).setListener(new CreateProjectDialog.OnCreateProjectListener() {
+                    @Override
+                    public void onCreateProject(Project project) {
+                        //TODO need save project
+                    }
+                });
+                dialog.show(getSupportFragmentManager(), "project_dialog");
             }
         });
     }
 
     @Override
     public void onProjectClicked(long id) {
-        Log.d("MainActivity", "Project id: " + id);
         Intent intent = new Intent(MainActivity.this, ProjectActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void onTaskClicked(long projectId, long taskId) {
-        Log.d("MainActivity", "Project id: " + projectId + ", task id: " + taskId);
         if(taskId == -1){
-            //TODO open create new task dialog
+            DialogFragment dialog = new CreateTaskDialog();
+            ((CreateTaskDialog) dialog).setListener(new CreateTaskDialog.OnCreateTaskListener() {
+                @Override
+                public void onCreateTask(Task task) {
+                    //TODO save new task
+                }
+            });
+            dialog.show(getSupportFragmentManager(), "task_dialog");
         }
         else {
             //TODO

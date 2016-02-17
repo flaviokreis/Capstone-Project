@@ -8,6 +8,14 @@
     <color name="secondaryText">#727272</color>
     <color name="dividerColor">#B6B6B6</color>
     <color name="colorAccent">#FF4081</color>
-    
+
+    <color name="project_color_1">#7B1FA2</color>
+    <color name="project_color_2">#303F9F</color>
+    <color name="project_color_3">#0097A7</color>
+    <color name="project_color_4">#388E3C</color>
+    <color name="project_color_5">#FFB300</color>
+    <color name="project_color_6">#E64A19</color>
+    <color name="project_color_7">#5D4037</color>
+    <color name="project_color_8">#455A64</color>
 
 </resources>

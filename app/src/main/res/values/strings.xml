@@ -153,4 +153,8 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_export">ExportActivity</string>
+    <string name="add_project">Add Project</string>
+    <string name="add_task">Add Task</string>
+    <string name="need_insert_a_name">Need insert a name</string>
+    <string name="need_insert_a_value">Need insert a value</string>
 </resources>

@@ -136,4 +136,17 @@ public class Project implements Parcelable {
             return new Project[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", valueHour=" + valueHour +
+                ", description='" + description + '\'' +
+                ", color=" + color +
+                ", insertedDate=" + insertedDate +
+                ", updatedDate=" + updatedDate +
+                '}';
+    }
 }
