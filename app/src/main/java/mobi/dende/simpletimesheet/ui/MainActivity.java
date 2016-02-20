@@ -18,6 +18,7 @@ import android.view.View;
 import mobi.dende.simpletimesheet.R;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.model.Task;
+import mobi.dende.simpletimesheet.ui.fragment.ProjectDetailsFragment;
 import mobi.dende.simpletimesheet.ui.fragment.ProjectFragment;
 
 public class MainActivity extends AppCompatActivity implements OnProjectScreenListener {
@@ -165,8 +166,9 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
     }
 
     @Override
-    public void onProjectClicked(long id) {
+    public void onProjectClicked(Project project) {
         Intent intent = new Intent(MainActivity.this, ProjectActivity.class);
+        intent.putExtra(ProjectDetailsFragment.EXTRA_PROJECT, project);
         startActivity(intent);
     }
 

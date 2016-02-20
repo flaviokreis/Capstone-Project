@@ -36,6 +36,7 @@
 
         <activity
             android:name=".ui.SettingsActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:label="@string/title_activity_settings" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -45,6 +46,7 @@
         <activity
             android:name=".ui.ExportActivity"
             android:label="@string/title_activity_export"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

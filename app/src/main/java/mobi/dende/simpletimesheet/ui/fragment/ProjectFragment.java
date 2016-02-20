@@ -74,7 +74,7 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
         Project project = new Project();
         project.setId(1);
         project.setName("Project ABC");
-        project.setColor(Color.BLUE);
+        project.setColor(getResources().getColor(R.color.project_color_3));
 
         projectList.add(project);
 
@@ -105,7 +105,7 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
         project = new Project();
         project.setId(2);
         project.setName("Project ASFDA");
-        project.setColor(Color.CYAN);
+        project.setColor(getResources().getColor(R.color.project_color_4));
 
         projectList.add(project);
 
@@ -127,7 +127,7 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
         project = new Project();
         project.setId(12);
         project.setName("asdfasdf Project");
-        project.setColor(Color.RED);
+        project.setColor(getResources().getColor(R.color.project_color_5));
 
         projectList.add(project);
 
@@ -156,7 +156,7 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
 
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-        mMainListener.onProjectClicked(id);
+        mMainListener.onProjectClicked(mAdapter.getGroup(groupPosition));
         return true;
     }
 
