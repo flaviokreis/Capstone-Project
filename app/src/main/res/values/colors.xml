@@ -9,6 +9,8 @@
     <color name="dividerColor">#B6B6B6</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="bg_white">#FFFFFF</color>
+
     <color name="project_color_1">#7B1FA2</color>
     <color name="project_color_2">#303F9F</color>
     <color name="project_color_3">#0097A7</color>

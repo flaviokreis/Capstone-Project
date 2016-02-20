@@ -37,12 +37,18 @@
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mobi.dende.simpletimesheet.ui.MainActivity" />
         </activity>
 
         <activity
             android:name=".ui.ExportActivity"
             android:label="@string/title_activity_export"
             android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mobi.dende.simpletimesheet.ui.MainActivity" />
         </activity>
 
         <provider
