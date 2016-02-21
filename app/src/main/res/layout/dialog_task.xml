@@ -16,7 +16,7 @@
         android:singleLine="true"
         android:imeOptions="actionNext"
         android:layout_margin="8dp"
-        android:hint="Project name"/>
+        android:hint="@string/hint_task_name"/>
 
     <com.ribell.colorpickerview.ColorPickerView
         android:id="@+id/task_color_picker"
@@ -46,6 +46,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:hint="Description"/>
+        android:hint="@string/description"/>
 
 </LinearLayout>

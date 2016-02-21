@@ -54,6 +54,16 @@ public class TimesheetContact {
 
         public static final String COLUMN_UPDATED_DATE = "updated_date";
 
+        public static final String[] PROJECTION = {
+                _ID,
+                COLUMN_NAME,
+                COLUMN_VALUE_HOUR,
+                COLUMN_DESCRIPTION,
+                COLUMN_COLOR,
+                COLUMN_INSERTED_DATE,
+                COLUMN_UPDATED_DATE
+        };
+
         public static Uri buildtUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
@@ -83,6 +93,16 @@ public class TimesheetContact {
         public static final String COLUMN_INSERTED_DATE = "inserted_date";
 
         public static final String COLUMN_UPDATED_DATE = "updated_date";
+
+        public static final String[] PROJECTION = {
+                _ID,
+                COLUMN_PROJECT_ID,
+                COLUMN_NAME,
+                COLUMN_DESCRIPTION,
+                COLUMN_COLOR,
+                COLUMN_INSERTED_DATE,
+                COLUMN_UPDATED_DATE
+        };
 
         public static Uri buildtUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

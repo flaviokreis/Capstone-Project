@@ -77,4 +77,8 @@
     <string name="period">Period</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="hint_task_name">Task name</string>
+    <string name="hint_project_name">Project name</string>
+    <string name="per_hour">per hour</string>
+    <string name="hint_money">$$$</string>
 </resources>

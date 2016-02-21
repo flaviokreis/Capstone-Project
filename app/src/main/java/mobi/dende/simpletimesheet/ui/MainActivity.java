@@ -3,6 +3,7 @@ package mobi.dende.simpletimesheet.ui;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import mobi.dende.simpletimesheet.R;
+import mobi.dende.simpletimesheet.controller.TimesheetManager;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.model.Task;
 import mobi.dende.simpletimesheet.ui.fragment.ProjectDetailsFragment;
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
                 ((CreateProjectDialog)dialog).setListener(new CreateProjectDialog.OnCreateProjectListener() {
                     @Override
                     public void onCreateProject(Project project) {
-                        //TODO need save project
+                        new SaveProjectAsync().execute(project);
                     }
                 });
                 dialog.show(getSupportFragmentManager(), "project_dialog");
@@ -176,13 +178,14 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
     }
 
     @Override
-    public void onTaskClicked(long projectId, long taskId) {
-        if(taskId == -1){
+    public void onTaskClicked(final Task task) {
+        if(task.getId() == -1){
             DialogFragment dialog = new CreateTaskDialog();
             ((CreateTaskDialog) dialog).setListener(new CreateTaskDialog.OnCreateTaskListener() {
                 @Override
-                public void onCreateTask(Task task) {
-                    //TODO save new task
+                public void onCreateTask(Task saveTask) {
+                    saveTask.setProject(task.getProject());
+                    new SaveTaskAsync().execute(saveTask);
                 }
             });
             dialog.show(getSupportFragmentManager(), "task_dialog");
@@ -192,6 +195,44 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             //1. start if not have other task started;
             //2. if the same task, stop;
             //3. if other task, show a dialog to confirm a change;
+        }
+    }
+
+    private void restartProjects(){
+        if(mProjectFragment != null){
+            mProjectFragment.restartProjects();
+        }
+    }
+
+    private class SaveProjectAsync extends AsyncTask<Project, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Project... params) {
+            return TimesheetManager.addProject(MainActivity.this, params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+
+            if(result){
+                restartProjects();
+            }
+        }
+    }
+
+    private class SaveTaskAsync extends AsyncTask<Task, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Task... params) {
+            return TimesheetManager.addTask(MainActivity.this, params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+
+            if(result){
+                restartProjects();
+            }
         }
     }
 }

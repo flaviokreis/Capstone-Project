@@ -1,7 +1,7 @@
 package mobi.dende.simpletimesheet.ui.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mobi.dende.simpletimesheet.R;
+import mobi.dende.simpletimesheet.controller.TimesheetManager;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.model.Task;
 import mobi.dende.simpletimesheet.ui.OnProjectScreenListener;
@@ -57,6 +57,10 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
         mListView.setOnGroupClickListener(ProjectFragment.this);
         mListView.setOnChildClickListener(ProjectFragment.this);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mListView.setNestedScrollingEnabled(true);
+        }
+
         return view;
     }
 
@@ -64,94 +68,19 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
     public void onResume() {
         super.onResume();
 
-        temp();
+        if(mAdapter.getGroupCount() == 0){
+            restartProjects();
+        }
     }
 
-    private void temp(){
-        List<Project> projectList = new ArrayList<>();
-        List<Task> tasks = new ArrayList<>();
+    public void restartProjects(){
+        ProjectsAsync async = new ProjectsAsync();
+        async.execute();
+    }
 
-        Project project = new Project();
-        project.setId(1);
-        project.setName("Project ABC");
-        project.setColor(getResources().getColor(R.color.project_color_3));
-
-        projectList.add(project);
-
-        Task task = new Task();
-        task.setId(1);
-        task.setName("Task ABC 1");
-        task.setProject(project);
-
-        tasks.add(task);
-
-        task = new Task();
-        task.setId(2);
-        task.setName("Task ABC 2");
-        task.setProject(project);
-
-        task = new Task();
-        task.setId(3);
-        task.setName("Task ABC 3");
-        task.setProject(project);
-
-        task = new Task();
-        task.setId(4);
-        task.setName("Task ABC 4");
-        task.setProject(project);
-
-        tasks.add(task);
-
-        project = new Project();
-        project.setId(2);
-        project.setName("Project ASFDA");
-        project.setColor(getResources().getColor(R.color.project_color_4));
-
-        projectList.add(project);
-
-        task = new Task();
-        task.setId(5);
-        task.setName("Task ASDFA 1");
-        task.setProject(project);
-
-        tasks.add(task);
-
-        task = new Task();
-        task.setId(6);
-        task.setName("Task ASDFA 2");
-        task.setProject(project);
-
-        tasks.add(task);
-
-
-        project = new Project();
-        project.setId(12);
-        project.setName("asdfasdf Project");
-        project.setColor(getResources().getColor(R.color.project_color_5));
-
-        projectList.add(project);
-
-        task = new Task();
-        task.setId(7);
-        task.setName("Task ABC 1");
-        task.setProject(project);
-
-        tasks.add(task);
-
-        task = new Task();
-        task.setId(22);
-        task.setName("Task ABC 2");
-        task.setProject(project);
-
-        tasks.add(task);
-
-        mAdapter.setProjects(projectList);
-        mAdapter.setTasks(tasks);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mListView.setNestedScrollingEnabled(true);
-        }
-
+    private void downloadTasks(List<Project> projects){
+        TasksAsync async = new TasksAsync();
+        async.execute(projects);
     }
 
     @Override
@@ -162,7 +91,40 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        mMainListener.onTaskClicked(mAdapter.getGroupId(groupPosition), id);
+        mMainListener.onTaskClicked(mAdapter.getChild(groupPosition, childPosition));
         return true;
+    }
+
+    private class ProjectsAsync extends AsyncTask<Void, Void, List<Project>> {
+
+        @Override
+        protected List<Project> doInBackground(Void... params) {
+            return TimesheetManager.getProjects(getContext());
+        }
+
+        @Override
+        protected void onPostExecute(List<Project> projects) {
+            super.onPostExecute(projects);
+
+            if((projects != null) && !projects.isEmpty()){
+                mAdapter.setProjects(projects);
+                downloadTasks(projects);
+            }
+        }
+    }
+
+    private class TasksAsync extends AsyncTask<List<Project>, Void, List<Task>> {
+
+        @Override
+        protected List<Task> doInBackground(List<Project>... params) {
+            return TimesheetManager.getTasks(getContext(), params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<Task> tasks) {
+            super.onPostExecute(tasks);
+
+            mAdapter.setTasks(tasks);
+        }
     }
 }

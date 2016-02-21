@@ -49,7 +49,10 @@ public class CreateProjectDialog extends DialogFragment {
         colorPicker.setListener(new ColorPickerViewListener() {
             @Override
             public void onColorPickerClick(int color) {
-                selectedColor = color;
+                Integer value = (Integer)colorPicker.getAdapter().getItem(color);
+                if(value != null){
+                    selectedColor = value;
+                }
             }
         } );
 
