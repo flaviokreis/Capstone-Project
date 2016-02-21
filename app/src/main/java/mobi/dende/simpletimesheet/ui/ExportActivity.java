@@ -8,24 +8,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import mobi.dende.simpletimesheet.R;
+import mobi.dende.simpletimesheet.ui.fragment.ExportFragment;
+import mobi.dende.simpletimesheet.ui.fragment.ProjectDetailsFragment;
 
 public class ExportActivity extends AppCompatActivity {
+
+    ExportFragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
+
+        if(savedInstanceState == null){
+            mFragment = new ExportFragment();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.export_main_content, mFragment)
+                    .commit();
+        }
+        
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

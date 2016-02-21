@@ -1,33 +1,36 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
-        android:key="example_switch"
-        android:title="@string/pref_title_social_recommendations"
-        android:summary="@string/pref_description_social_recommendations"
-        android:defaultValue="true" />
-
-    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
-    <EditTextPreference
-        android:key="example_text"
-        android:title="@string/pref_title_display_name"
-        android:defaultValue="@string/pref_default_display_name"
-        android:selectAllOnFocus="true"
-        android:inputType="textCapWords"
-        android:capitalize="words"
-        android:singleLine="true"
-        android:maxLines="1" />
-
-    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-         dismiss it. -->
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
     <ListPreference
-        android:key="example_list"
-        android:title="@string/pref_title_add_friends_to_messages"
-        android:defaultValue="-1"
-        android:entries="@array/pref_example_list_titles"
-        android:entryValues="@array/pref_example_list_values"
+        android:key="currency"
+        android:title="@string/pref_title_currency"
+        android:entries="@array/pref_currency_list_titles"
+        android:entryValues="@array/pref_currency_list_values"
+        android:defaultValue="$"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
+
+    <ListPreference
+        android:key="decimal_symbol"
+        android:title="@string/pref_title_decimal_symbol"
+        android:entries="@array/pref_decimal_symbol_list_titles"
+        android:entryValues="@array/pref_decimal_symbol_list_values"
+        android:defaultValue=","
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+    <ListPreference
+        android:key="date_format"
+        android:title="@string/pref_date_format_symbol"
+        android:entries="@array/pref_date_format_list_titles"
+        android:entryValues="@array/pref_date_format_list_values"
+        android:defaultValue="0"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+    <SwitchPreference
+        android:key="show_notification"
+        android:title="@string/pref_title_show_notification"
+        android:summary="@string/pref_description_show_notification"
+        android:defaultValue="true" />
 
 </PreferenceScreen>
