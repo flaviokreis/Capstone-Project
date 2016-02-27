@@ -12,12 +12,44 @@
     <color name="bg_white">#FFFFFF</color>
 
     <color name="project_color_1">#7B1FA2</color>
+    <color name="project_color_1_colorPrimaryDark">#7B1FA2</color>
+    <color name="project_color_1_colorPrimary">#9C27B0</color>
+    <color name="project_color_1_lightPrimaryColor">#E1BEE7</color>
+
     <color name="project_color_2">#303F9F</color>
+    <color name="project_color_2_colorPrimaryDark">#303F9F</color>
+    <color name="project_color_2_colorPrimary">#3F51B5</color>
+    <color name="project_color_2_lightPrimaryColor">#C5CAE9</color>
+
     <color name="project_color_3">#0097A7</color>
+    <color name="project_color_3_colorPrimaryDark">#0097A7</color>
+    <color name="project_color_3_colorPrimary">#00BCD4</color>
+    <color name="project_color_3_lightPrimaryColor">#B2EBF2</color>
+    <color name="project_color_3_colorAccent">#FFC107</color>
+
     <color name="project_color_4">#388E3C</color>
+    <color name="project_color_4_colorPrimaryDark">#388E3C</color>
+    <color name="project_color_4_colorPrimary">#4CAF50</color>
+    <color name="project_color_4_lightPrimaryColor">#C8E6C9</color>
+
     <color name="project_color_5">#FFB300</color>
+    <color name="project_color_5_colorPrimaryDark">#FFA000</color>
+    <color name="project_color_5_colorPrimary">#FFC107</color>
+    <color name="project_color_5_lightPrimaryColor">#FFECB3</color>
+
     <color name="project_color_6">#E64A19</color>
+    <color name="project_color_6_colorPrimaryDark">#E64A19</color>
+    <color name="project_color_6_colorPrimary">#FF5722</color>
+    <color name="project_color_6_lightPrimaryColor">#FFCCBC</color>
+
     <color name="project_color_7">#5D4037</color>
+    <color name="project_color_7_colorPrimaryDark">#5D4037</color>
+    <color name="project_color_7_colorPrimary">#795548</color>
+    <color name="project_color_7_lightPrimaryColor">#D7CCC8</color>
+
     <color name="project_color_8">#455A64</color>
+    <color name="project_color_8_colorPrimaryDark">#455A64</color>
+    <color name="project_color_8_colorPrimary">#607D8B</color>
+    <color name="project_color_8_lightPrimaryColor">#CFD8DC</color>
 
 </resources>

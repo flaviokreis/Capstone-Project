@@ -52,6 +52,7 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
         mListView = (ExpandableListView) view.findViewById(R.id.expandable_project_list);
 
         mAdapter = new ProjectAdapter(getActivity());
+        mAdapter.setListener(mMainListener);
 
         mListView.setAdapter(mAdapter);
         mListView.setOnGroupClickListener(ProjectFragment.this);
@@ -92,6 +93,7 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
         mMainListener.onTaskClicked(mAdapter.getChild(groupPosition, childPosition));
+        mAdapter.notifyDataSetChanged();
         return true;
     }
 

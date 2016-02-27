@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:paddingLeft="@dimen/abc_list_item_padding_horizontal_material"
-    >
+    android:paddingRight="@dimen/abc_list_item_padding_horizontal_material">
 
     <TextView
-        android:id="@+id/project_title"
-        android:layout_width="wrap_content"
+        android:id="@+id/task_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:paddingLeft="@dimen/abc_list_item_padding_horizontal_material"
         android:paddingRight="@dimen/abc_list_item_padding_horizontal_material"/>
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/task_pause_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_pause_circle_outline_black_24dp"
+        android:paddingRight="@dimen/abc_list_item_padding_horizontal_material"
+        android:visibility="invisible"/>
+
+</LinearLayout>

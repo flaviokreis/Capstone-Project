@@ -1,9 +1,12 @@
 package mobi.dende.simpletimesheet.model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+
+import mobi.dende.simpletimesheet.R;
 
 /**
  * Task item
@@ -22,10 +25,10 @@ public class Task implements Parcelable {
     }
 
     //To create special button
-    public Task(Project project){
+    public Task(Context context, Project project){
         this.project = project;
         this.color = project.getColor();
-        this.name = "+ Add Task"; //TODO add on Strings
+        this.name = context.getString(R.string.add_new_task);
         this.id = -1;
     }
 

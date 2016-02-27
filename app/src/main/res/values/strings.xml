@@ -81,4 +81,6 @@
     <string name="hint_project_name">Project name</string>
     <string name="per_hour">per hour</string>
     <string name="hint_money">$$$</string>
+    <string name="info_start_time">Click to start a task</string>
+    <string name="add_new_task">+ Add Task</string>
 </resources>

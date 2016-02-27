@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Map;
 import mobi.dende.simpletimesheet.R;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.model.Task;
+import mobi.dende.simpletimesheet.ui.OnProjectScreenListener;
 
 /**
  * Adapter to show expandable list of projects and tasks
@@ -23,6 +25,8 @@ import mobi.dende.simpletimesheet.model.Task;
 public class ProjectAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
+
+    private OnProjectScreenListener mListener;
 
     private List<Project> mProjects;
     private Map<Project, List<Task>> mTasks;
@@ -32,6 +36,10 @@ public class ProjectAdapter extends BaseExpandableListAdapter {
 
         mProjects = new ArrayList<>();
         mTasks = new HashMap<>();
+    }
+
+    public void setListener(OnProjectScreenListener listener){
+        mListener = listener;
     }
 
     public void setProjects(List<Project> projects){
@@ -60,7 +68,7 @@ public class ProjectAdapter extends BaseExpandableListAdapter {
         for(Project project : mProjects){
             List<Task> list = mTasks.get(project);
             if(list != null){
-                list.add(new Task(project));
+                list.add(new Task(mContext, project));
             }
         }
 
@@ -134,7 +142,8 @@ public class ProjectAdapter extends BaseExpandableListAdapter {
 
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_list_task, null);
 
-            viewHolder.title = (TextView)convertView.findViewById(R.id.project_title);
+            viewHolder.title = (TextView)convertView.findViewById(R.id.task_title);
+            viewHolder.pause = (ImageView)convertView.findViewById(R.id.task_pause_icon);
 
             convertView.setTag(viewHolder);
 
@@ -143,13 +152,25 @@ public class ProjectAdapter extends BaseExpandableListAdapter {
             viewHolder = (ChildViewHolder)convertView.getTag();
         }
 
-        viewHolder.title.setText(getChild(groupPosition, childPosition).getName());
+        Task task = getChild(groupPosition, childPosition);
+
+        viewHolder.title.setText(task.getName());
+
+        if((mListener != null) && mListener.isPlayedTask(task)){
+            viewHolder.title.setTextColor(task.getColor());
+            viewHolder.pause.setVisibility(View.VISIBLE);
+        }
+        else{
+            viewHolder.title.setTextColor(mContext.getResources().getColor(R.color.primaryText));
+            viewHolder.pause.setVisibility(View.INVISIBLE);
+        }
 
         return convertView;
     }
 
     private static class ChildViewHolder{
         public TextView title;
+        public ImageView pause;
     }
 
     @Override

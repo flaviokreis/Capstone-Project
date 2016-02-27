@@ -27,8 +27,7 @@
         <activity
             android:name=".ui.ProjectActivity"
             android:label="@string/title_activity_project"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:parentActivityName=".ui.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="mobi.dende.simpletimesheet.ui.MainActivity" />

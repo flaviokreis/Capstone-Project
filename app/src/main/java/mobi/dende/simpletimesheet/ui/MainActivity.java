@@ -5,7 +5,9 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
@@ -16,6 +18,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import mobi.dende.simpletimesheet.R;
 import mobi.dende.simpletimesheet.controller.TimesheetManager;
@@ -26,14 +32,28 @@ import mobi.dende.simpletimesheet.ui.fragment.ProjectFragment;
 
 public class MainActivity extends AppCompatActivity implements OnProjectScreenListener {
 
+    private static final String KEY_TASK = "task";
+
     private ProjectFragment mProjectFragment;
 
     private Toolbar mToolbar;
     private FloatingActionButton mFab;
 
+    private CollapsingToolbarLayout mCollapsingBar;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    private TextView mProjectName;
+    private TextView mTaskName;
+    private TextView mDuration;
+
+    private Task mPlayedTask;
+
+    private int count;
+
+    private final Handler handler = new Handler();
+    private Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +71,14 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
         }
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+
+        mCollapsingBar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+
+        mProjectName = (TextView) findViewById(R.id.toolbar_project_name);
+        mTaskName    = (TextView) findViewById(R.id.toolbar_task_name);
+        mDuration    = (TextView) findViewById(R.id.toolbar_task_duration);
 
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
 
                         boolean isItemSelected = false;
 
-                        switch (menuItem.getItemId()){
+                        switch (menuItem.getItemId()) {
                             case R.id.nav_dashboard:
                                 isItemSelected = true;
                                 break;
@@ -108,6 +135,17 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
                         return isItemSelected;
                     }
                 });
+
+        if(savedInstanceState != null){
+            mPlayedTask = savedInstanceState.getParcelable(KEY_TASK);
+            startTask(mPlayedTask, false);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(KEY_TASK, mPlayedTask);
+        super.onSaveInstanceState(outState);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -191,17 +229,99 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             dialog.show(getSupportFragmentManager(), "task_dialog");
         }
         else {
-            //TODO
-            //1. start if not have other task started;
-            //2. if the same task, stop;
-            //3. if other task, show a dialog to confirm a change;
+            startTask(task, true);
         }
+    }
+
+    @Override
+    public boolean isPlayedTask(Task task) {
+        return (mPlayedTask != null) && (mPlayedTask.equals(task));
     }
 
     private void restartProjects(){
         if(mProjectFragment != null){
             mProjectFragment.restartProjects();
         }
+    }
+
+    private void startTask(Task task, boolean changeState){
+        if(changeState){
+            if(mPlayedTask == null){
+                mPlayedTask = task;
+
+                mCollapsingBar.setBackgroundColor(mPlayedTask.getColor());
+
+                mDuration.setVisibility(View.VISIBLE);
+                mTaskName.setVisibility(View.VISIBLE);
+
+                mProjectName.setText(mPlayedTask.getProject().getName());
+                mTaskName.setText(mPlayedTask.getName());
+                mDuration.setText("Duration: 00:00");
+
+                TimerTask doAsynchronousTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        handler.post(new Runnable() {
+                            @SuppressWarnings("unchecked")
+                            public void run() {
+                                try {
+                                    //TODO test
+                                    count++;
+                                    mDuration.setText("Duration: 00:" + count);
+                                }
+                                catch (Exception e) {
+                                    // TODO Auto-generated catch block
+                                }
+                            }
+                        });
+                    }
+                };
+                timer.schedule(doAsynchronousTask, 60000);
+            }
+            else if(mPlayedTask.equals(task)){
+                mPlayedTask = null;
+
+                mCollapsingBar.setBackgroundResource(R.color.colorPrimary);
+
+                mDuration.setVisibility(View.INVISIBLE);
+                mTaskName.setVisibility(View.INVISIBLE);
+
+                mProjectName.setText(R.string.info_start_time);
+            }
+            else{
+                mPlayedTask = task;
+
+                mCollapsingBar.setBackgroundColor(mPlayedTask.getColor());
+
+                mDuration.setVisibility(View.VISIBLE);
+                mTaskName.setVisibility(View.VISIBLE);
+
+                mProjectName.setText(mPlayedTask.getProject().getName());
+                mTaskName.setText(mPlayedTask.getName());
+                mDuration.setText("Duration: 00:00");
+            }
+        }
+        else{
+            if(task != null){
+                mCollapsingBar.setBackgroundColor(task.getColor());
+
+                mDuration.setVisibility(View.VISIBLE);
+                mTaskName.setVisibility(View.VISIBLE);
+
+                mProjectName.setText(task.getProject().getName());
+                mTaskName.setText(task.getName());
+                mDuration.setText("Duration: 00:00");
+            }
+            else{
+                mCollapsingBar.setBackgroundResource(R.color.colorPrimary);
+
+                mDuration.setVisibility(View.INVISIBLE);
+                mTaskName.setVisibility(View.INVISIBLE);
+
+                mProjectName.setText(R.string.info_start_time);
+            }
+        }
+
     }
 
     private class SaveProjectAsync extends AsyncTask<Project, Void, Boolean> {

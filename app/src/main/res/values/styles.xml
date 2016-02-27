@@ -18,4 +18,54 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Projects" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColorPrimary">@color/primaryText</item>
+        <item name="android:textColorSecondary">@color/secondaryText</item>
+        <item name="android:divider">@color/dividerColor</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Projects.Theme1">
+        <item name="colorPrimary">@color/project_color_1_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/project_color_1_colorPrimary</item>
+    </style>
+
+    <style name="Projects.Theme2">
+        <item name="colorPrimary">@color/project_color_2_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/project_color_2_colorPrimary</item>
+    </style>
+
+    <style name="Projects.Theme3">
+        <item name="colorPrimary">@color/project_color_3_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/project_color_3_colorPrimary</item>
+        <item name="colorAccent">@color/project_color_3_colorAccent</item>
+    </style>
+
+    <style name="Projects.Theme4">
+        <item name="colorPrimary">@color/project_color_4_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/project_color_4_colorPrimary</item>
+    </style>
+
+    <style name="Projects.Theme5">
+        <item name="colorPrimary">@color/project_color_5_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/project_color_5_colorPrimary</item>
+    </style>
+
+    <style name="Projects.Theme6">
+        <item name="colorPrimary">@color/project_color_6_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/project_color_6_colorPrimary</item>
+    </style>
+
+    <style name="Projects.Theme7">
+        <item name="colorPrimary">@color/project_color_7_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/project_color_7_colorPrimary</item>
+    </style>
+
+    <style name="Projects.Theme8">
+        <item name="colorPrimary">@color/project_color_8_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/project_color_8_colorPrimary</item>
+    </style>
+
 </resources>

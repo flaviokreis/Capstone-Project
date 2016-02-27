@@ -2,11 +2,9 @@ package mobi.dende.simpletimesheet.ui;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.MenuItem;
 
 import java.util.List;
 
@@ -14,7 +12,6 @@ import mobi.dende.simpletimesheet.R;
 import mobi.dende.simpletimesheet.controller.TimesheetManager;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.ui.fragment.ExportFragment;
-import mobi.dende.simpletimesheet.ui.fragment.ProjectDetailsFragment;
 
 public class ExportActivity extends AppCompatActivity {
 
@@ -36,7 +33,19 @@ public class ExportActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 
     private class ProjectsAsync extends AsyncTask<Void, Void, List<Project>> {

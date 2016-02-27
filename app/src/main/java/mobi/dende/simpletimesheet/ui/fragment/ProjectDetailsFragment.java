@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import mobi.dende.simpletimesheet.R;
 import mobi.dende.simpletimesheet.model.Project;
-import mobi.dende.simpletimesheet.util.ChartUtil;
+import mobi.dende.simpletimesheet.util.Utils;
 import mobi.dende.simpletimesheet.util.CustomYAxisValueFormatter;
 
 public class ProjectDetailsFragment extends Fragment{
@@ -81,7 +81,7 @@ public class ProjectDetailsFragment extends Fragment{
 
         ArrayList<String> xVals = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            xVals.add(ChartUtil.months[i % 12]);
+            xVals.add(Utils.months[i % 12]);
         }
 
         ArrayList<BarEntry> yVals1 = new ArrayList<>();
