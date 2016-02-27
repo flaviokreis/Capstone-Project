@@ -83,4 +83,5 @@
     <string name="hint_money">$$$</string>
     <string name="info_start_time">Click to start a task</string>
     <string name="add_new_task">+ Add Task</string>
+    <string name="task_duration">Duration: %1$s</string>
 </resources>

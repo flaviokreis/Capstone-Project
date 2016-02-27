@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,6 +33,8 @@ import mobi.dende.simpletimesheet.ui.fragment.ProjectDetailsFragment;
 import mobi.dende.simpletimesheet.ui.fragment.ProjectFragment;
 
 public class MainActivity extends AppCompatActivity implements OnProjectScreenListener {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final String KEY_TASK = "task";
 
@@ -48,12 +52,12 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
     private TextView mTaskName;
     private TextView mDuration;
 
-    private Task mPlayedTask;
-
-    private int count;
+    private mobi.dende.simpletimesheet.model.Timer mPlayedTimer;
 
     private final Handler handler = new Handler();
     private Timer timer = new Timer();
+
+    TimerTask doAsynchronousTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,14 +141,14 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
                 });
 
         if(savedInstanceState != null){
-            mPlayedTask = savedInstanceState.getParcelable(KEY_TASK);
-            startTask(mPlayedTask, false);
+            mPlayedTimer = savedInstanceState.getParcelable(KEY_TASK);
+            showTask();
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(KEY_TASK, mPlayedTask);
+        outState.putParcelable(KEY_TASK, mPlayedTimer);
         super.onSaveInstanceState(outState);
     }
 
@@ -229,13 +233,13 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             dialog.show(getSupportFragmentManager(), "task_dialog");
         }
         else {
-            startTask(task, true);
+            startTask(task);
         }
     }
 
     @Override
     public boolean isPlayedTask(Task task) {
-        return (mPlayedTask != null) && (mPlayedTask.equals(task));
+        return (mPlayedTimer != null) && (mPlayedTimer.getTask().equals(task));
     }
 
     private void restartProjects(){
@@ -244,84 +248,100 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
         }
     }
 
-    private void startTask(Task task, boolean changeState){
-        if(changeState){
-            if(mPlayedTask == null){
-                mPlayedTask = task;
+    private void startTask(Task task){
+        if(mPlayedTimer == null){
+            //TODO save start time
 
-                mCollapsingBar.setBackgroundColor(mPlayedTask.getColor());
-
-                mDuration.setVisibility(View.VISIBLE);
-                mTaskName.setVisibility(View.VISIBLE);
-
-                mProjectName.setText(mPlayedTask.getProject().getName());
-                mTaskName.setText(mPlayedTask.getName());
-                mDuration.setText("Duration: 00:00");
-
-                TimerTask doAsynchronousTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        handler.post(new Runnable() {
-                            @SuppressWarnings("unchecked")
-                            public void run() {
-                                try {
-                                    //TODO test
-                                    count++;
-                                    mDuration.setText("Duration: 00:" + count);
-                                }
-                                catch (Exception e) {
-                                    // TODO Auto-generated catch block
-                                }
-                            }
-                        });
-                    }
-                };
-                timer.schedule(doAsynchronousTask, 60000);
-            }
-            else if(mPlayedTask.equals(task)){
-                mPlayedTask = null;
-
-                mCollapsingBar.setBackgroundResource(R.color.colorPrimary);
-
-                mDuration.setVisibility(View.INVISIBLE);
-                mTaskName.setVisibility(View.INVISIBLE);
-
-                mProjectName.setText(R.string.info_start_time);
-            }
-            else{
-                mPlayedTask = task;
-
-                mCollapsingBar.setBackgroundColor(mPlayedTask.getColor());
-
-                mDuration.setVisibility(View.VISIBLE);
-                mTaskName.setVisibility(View.VISIBLE);
-
-                mProjectName.setText(mPlayedTask.getProject().getName());
-                mTaskName.setText(mPlayedTask.getName());
-                mDuration.setText("Duration: 00:00");
-            }
+            mPlayedTimer = new mobi.dende.simpletimesheet.model.Timer();
+            mPlayedTimer.setTask(task);
+            mPlayedTimer.setStartTime(new Date());
+        }
+        else if(mPlayedTimer.getTask().equals(task)){
+            //TODO save end time
+            mPlayedTimer = null;
         }
         else{
-            if(task != null){
-                mCollapsingBar.setBackgroundColor(task.getColor());
-
-                mDuration.setVisibility(View.VISIBLE);
-                mTaskName.setVisibility(View.VISIBLE);
-
-                mProjectName.setText(task.getProject().getName());
-                mTaskName.setText(task.getName());
-                mDuration.setText("Duration: 00:00");
-            }
-            else{
-                mCollapsingBar.setBackgroundResource(R.color.colorPrimary);
-
-                mDuration.setVisibility(View.INVISIBLE);
-                mTaskName.setVisibility(View.INVISIBLE);
-
-                mProjectName.setText(R.string.info_start_time);
-            }
+            //TODO save end time to old timer and save start time
+            mPlayedTimer = new mobi.dende.simpletimesheet.model.Timer();
+            mPlayedTimer.setTask(task);
+            mPlayedTimer.setStartTime(new Date());
         }
 
+        showTask();
+    }
+
+    private void showTask(){
+        if(doAsynchronousTask != null){
+            doAsynchronousTask.cancel();
+            timer.purge();
+        }
+
+        if(mPlayedTimer != null) {
+            mCollapsingBar.setBackgroundColor(mPlayedTimer.getTask().getColor());
+
+            mDuration.setVisibility(View.VISIBLE);
+            mTaskName.setVisibility(View.VISIBLE);
+
+            mProjectName.setText(mPlayedTimer.getTask().getProject().getName());
+            mTaskName.setText(mPlayedTimer.getTask().getName());
+
+            doAsynchronousTask = new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        public void run() {
+                            if (mDuration != null) {
+                                if (mPlayedTimer != null) {
+                                    long actualTime = Calendar.getInstance().getTimeInMillis();
+                                    long insertedTime = 0;
+                                    if (mPlayedTimer.getStartTime() != null) {
+                                        insertedTime = mPlayedTimer.getStartTime().getTime();
+                                    }
+
+                                    long size = (actualTime - insertedTime) / 1000;
+
+                                    String value = "";
+
+                                    if (size > 0 && size < 60) {
+                                        value = String.format("%02ds", (int) size);
+                                    } else if (size < 86400) {
+                                        int hour = (int) (size / 3600);
+                                        int minute = (int) (size % 3600) / 60;
+
+                                        value = String.format("%02d:%02d", hour, minute);
+                                    } else if (size >= 86400) {
+                                        int day = (int) (size / 86400);
+
+                                        if (day == 1) {
+                                            value = String.format("%2d day", day);
+                                        } else {
+                                            value = String.format("%2d days", day);
+                                        }
+                                    }
+
+                                    mDuration.setText(String.format(getString(R.string.task_duration), value));
+                                } else {
+
+                                }
+
+                            }
+                        }
+                    });
+                }
+            };
+
+            timer.schedule(doAsynchronousTask, 1000, 1000);
+        }
+        else{
+            mCollapsingBar.setBackgroundResource(R.color.colorPrimary);
+
+            mDuration.setVisibility(View.INVISIBLE);
+            mTaskName.setVisibility(View.INVISIBLE);
+
+            mProjectName.setText(R.string.info_start_time);
+            mTaskName.setText("");
+            mDuration.setText("");
+        }
     }
 
     private class SaveProjectAsync extends AsyncTask<Project, Void, Boolean> {

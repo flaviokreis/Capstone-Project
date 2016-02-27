@@ -14,6 +14,10 @@ public class Timer implements Parcelable {
     private Date startTime;
     private Date endTime;
 
+    public Timer(){
+
+    }
+
     public long getId() {
         return id;
     }
