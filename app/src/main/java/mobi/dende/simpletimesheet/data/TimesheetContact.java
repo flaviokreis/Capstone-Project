@@ -130,6 +130,14 @@ public class TimesheetContact {
 
         public static final String COLUMN_END_DATE = "end_time";
 
+        public static final String[] PROJECTION = {
+                _ID,
+                COLUMN_PROJECT_ID,
+                COLUMN_TASK_ID,
+                COLUMN_START_DATE,
+                COLUMN_END_DATE
+        };
+
         public static Uri buildtUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }

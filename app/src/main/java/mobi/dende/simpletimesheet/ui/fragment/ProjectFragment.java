@@ -97,6 +97,12 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
         return true;
     }
 
+    public void notifyChange(){
+        if(mAdapter != null){
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     private class ProjectsAsync extends AsyncTask<Void, Void, List<Project>> {
 
         @Override

@@ -18,6 +18,16 @@ public class Timer implements Parcelable {
 
     }
 
+    public Timer clone(){
+        Timer timer = new Timer();
+        timer.setId(id);
+        timer.setTask(task);
+        timer.setStartTime(startTime);
+        timer.setEndTime(endTime);
+
+        return timer;
+    }
+
     public long getId() {
         return id;
     }

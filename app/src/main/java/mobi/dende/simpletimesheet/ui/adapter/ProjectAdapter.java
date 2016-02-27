@@ -156,7 +156,7 @@ public class ProjectAdapter extends BaseExpandableListAdapter {
 
         viewHolder.title.setText(task.getName());
 
-        if((mListener != null) && mListener.isPlayedTask(task)){
+        if((mListener != null) && (mListener.isPlayedTaskId() != 0) && (mListener.isPlayedTaskId() == task.getId())){
             viewHolder.title.setTextColor(task.getColor());
             viewHolder.pause.setVisibility(View.VISIBLE);
         }

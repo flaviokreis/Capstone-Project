@@ -12,5 +12,5 @@ public interface OnProjectScreenListener {
 
     void onTaskClicked(Task task);
 
-    boolean isPlayedTask(Task task);
+    long isPlayedTaskId();
 }

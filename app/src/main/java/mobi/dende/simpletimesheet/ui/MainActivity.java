@@ -142,7 +142,10 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
 
         if(savedInstanceState != null){
             mPlayedTimer = savedInstanceState.getParcelable(KEY_TASK);
-            showTask();
+            showTimer();
+        }
+        else {
+            new PlayedTimerAsync().execute();
         }
     }
 
@@ -238,8 +241,9 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
     }
 
     @Override
-    public boolean isPlayedTask(Task task) {
-        return (mPlayedTimer != null) && (mPlayedTimer.getTask().equals(task));
+    public long isPlayedTaskId() {
+        if(mPlayedTimer == null) return 0;
+        return mPlayedTimer.getTask().getId();
     }
 
     private void restartProjects(){
@@ -250,27 +254,34 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
 
     private void startTask(Task task){
         if(mPlayedTimer == null){
-            //TODO save start time
-
             mPlayedTimer = new mobi.dende.simpletimesheet.model.Timer();
             mPlayedTimer.setTask(task);
             mPlayedTimer.setStartTime(new Date());
+
+            new SaveTimerAsync().execute(mPlayedTimer);
         }
         else if(mPlayedTimer.getTask().equals(task)){
-            //TODO save end time
+            mobi.dende.simpletimesheet.model.Timer timer = mPlayedTimer.clone();
+            timer.setEndTime(new Date());
+            new SaveTimerAsync().equals(timer);
             mPlayedTimer = null;
+
+            new SaveTimerAsync().execute(timer);
         }
         else{
-            //TODO save end time to old timer and save start time
+            mobi.dende.simpletimesheet.model.Timer timer = mPlayedTimer.clone();
+            timer.setEndTime(new Date());
             mPlayedTimer = new mobi.dende.simpletimesheet.model.Timer();
             mPlayedTimer.setTask(task);
             mPlayedTimer.setStartTime(new Date());
+
+            new SaveTimerAsync().execute(mPlayedTimer, timer);
         }
 
-        showTask();
+        showTimer();
     }
 
-    private void showTask(){
+    private void showTimer(){
         if(doAsynchronousTask != null){
             doAsynchronousTask.cancel();
             timer.purge();
@@ -320,7 +331,8 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
                                     }
 
                                     mDuration.setText(String.format(getString(R.string.task_duration), value));
-                                } else {
+                                }
+                                else {
 
                                 }
 
@@ -373,6 +385,49 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             if(result){
                 restartProjects();
             }
+        }
+    }
+
+    private class PlayedTimerAsync extends AsyncTask<Void, Void, mobi.dende.simpletimesheet.model.Timer> {
+        @Override
+        protected mobi.dende.simpletimesheet.model.Timer doInBackground(Void... params) {
+            return TimesheetManager.getPlayedTimer(MainActivity.this);
+        }
+
+        @Override
+        protected void onPostExecute(mobi.dende.simpletimesheet.model.Timer result) {
+            super.onPostExecute(result);
+
+            if(result != null){
+                mPlayedTimer = result;
+                showTimer();
+                if(mProjectFragment != null){
+                    mProjectFragment.notifyChange();
+                }
+            }
+        }
+    }
+
+    private class SaveTimerAsync extends AsyncTask<mobi.dende.simpletimesheet.model.Timer, Void, Long> {
+        @Override
+        protected Long doInBackground(mobi.dende.simpletimesheet.model.Timer... params) {
+            if(params != null){
+                boolean isFirst = true;
+                for(mobi.dende.simpletimesheet.model.Timer timer : params){
+                    long value = TimesheetManager.addTimer(MainActivity.this, timer);
+                    if(isFirst && (mPlayedTimer != null)){
+                        isFirst = false;
+                        mPlayedTimer.setId(value);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Long result) {
+            super.onPostExecute(result);
         }
     }
 }
