@@ -55,7 +55,7 @@ public class ProjectDetailsFragment extends Fragment{
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(STATE_PROJECT_DETAILS, outState);
+        outState.putParcelable(STATE_PROJECT_DETAILS, mProjectDetail);
         super.onSaveInstanceState(outState);
     }
 
