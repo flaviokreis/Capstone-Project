@@ -51,7 +51,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:layout_weight="3"
-            android:enabled="false"
+            android:cursorVisible="false"
+            android:editable="false"
             android:text="Mon, 02/01/2016"/>
 
     </LinearLayout>
@@ -74,7 +75,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:layout_weight="3"
-            android:enabled="false"
+            android:cursorVisible="false"
+            android:editable="false"
             android:text="Mon, 02/29/2016"/>
 
     </LinearLayout>
@@ -93,31 +95,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Resume"/>
+            android:text="@string/resume"/>
 
         <TextView
+            android:id="@+id/export_total_hours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Total Hours: 160 Hours"/>
+            android:layout_marginTop="6dp"/>
 
         <TextView
+            android:id="@+id/export_value_hour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Hour: $30"/>
+            android:layout_marginTop="6dp"/>
 
         <TextView
+            android:id="@+id/export_value_total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:gravity="end"
-            android:text="$4800"/>
+            android:gravity="end"/>
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/export_btn"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

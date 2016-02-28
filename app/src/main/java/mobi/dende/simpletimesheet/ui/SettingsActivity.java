@@ -63,8 +63,6 @@ public class SettingsActivity extends AppCompatActivity {
             addPreferencesFromResource(R.xml.pref_general);
 
             bindPreferenceSummaryToValue(findPreference("currency"));
-            bindPreferenceSummaryToValue(findPreference("decimal_symbol"));
-            bindPreferenceSummaryToValue(findPreference("date_format"));
         }
     }
 

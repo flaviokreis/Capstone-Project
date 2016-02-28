@@ -1,4 +1,4 @@
-package mobi.dende.simpletimesheet.ui;
+package mobi.dende.simpletimesheet.ui.dialog;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -17,22 +17,21 @@ import com.ribell.colorpickerview.interfaces.ColorPickerViewListener;
 import java.util.Date;
 
 import mobi.dende.simpletimesheet.R;
-import mobi.dende.simpletimesheet.model.Task;
+import mobi.dende.simpletimesheet.model.Project;
 
 /**
  * Created by flaviokreis on 13/02/16.
  */
-public class CreateTaskDialog extends DialogFragment {
-
+public class CreateProjectDialog extends DialogFragment {
     private int selectedColor = -1;
 
-    private OnCreateTaskListener listener;
+    private OnCreateProjectListener listener;
 
-    public interface OnCreateTaskListener {
-        void onCreateTask(Task task);
+    public interface OnCreateProjectListener {
+        void onCreateProject(Project project);
     }
 
-    public void setListener(OnCreateTaskListener listener){
+    public void setListener(OnCreateProjectListener listener){
         this.listener = listener;
     }
 
@@ -40,11 +39,12 @@ public class CreateTaskDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View view  = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_task, null);
+        View view  = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_project, null);
 
-        final EditText tasktName          = (EditText)view.findViewById(R.id.task_name);
-        final ColorPickerView colorPicker = (ColorPickerView)view.findViewById(R.id.task_color_picker);
-        final EditText taskDescription    = (EditText)view.findViewById(R.id.task_description);
+        final EditText projectName        = (EditText)view.findViewById(R.id.project_name);
+        final ColorPickerView colorPicker = (ColorPickerView)view.findViewById(R.id.project_color_picker);
+        final EditText projectValue       = (EditText)view.findViewById(R.id.project_value);
+        final EditText projectDescription = (EditText)view.findViewById(R.id.project_description);
 
         colorPicker.setListener(new ColorPickerViewListener() {
             @Override
@@ -56,12 +56,16 @@ public class CreateTaskDialog extends DialogFragment {
             }
         } );
 
-        builder.setTitle(getString(R.string.add_task))
+        builder.setTitle(getString(R.string.add_project))
                 .setView(view)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if(TextUtils.isEmpty(tasktName.getText().toString().trim())){
+                        if(TextUtils.isEmpty(projectName.getText().toString().trim())){
                             Toast.makeText(getActivity(), R.string.need_insert_a_name, Toast.LENGTH_SHORT).show();
+                            return ;
+                        }
+                        else if(TextUtils.isEmpty(projectValue.getText().toString().trim())){
+                            Toast.makeText(getActivity(), R.string.need_insert_a_value, Toast.LENGTH_SHORT).show();
                             return ;
                         }
 
@@ -70,16 +74,15 @@ public class CreateTaskDialog extends DialogFragment {
                         }
 
                         if(listener != null){
-                            Task task = new Task();
-                            task.setId(0);
-                            task.setName(tasktName.getText().toString().trim());
-                            task.setColor(selectedColor);
-                            task.setDescription(taskDescription.getText().toString().trim());
-                            task.setInsertedDate(new Date());
-
-                            listener.onCreateTask(task);
+                            Project project = new Project();
+                            project.setId(0);
+                            project.setName(projectName.getText().toString().trim());
+                            project.setColor(selectedColor);
+                            project.setValueHour(Float.valueOf(projectValue.getText().toString()));
+                            project.setDescription(projectDescription.getText().toString().trim());
+                            project.setInsertedDate(new Date());
+                            listener.onCreateProject(project);
                         }
-
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

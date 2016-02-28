@@ -139,14 +139,6 @@ public class Project implements Parcelable {
 
     @Override
     public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", valueHour=" + valueHour +
-                ", description='" + description + '\'' +
-                ", color=" + color +
-                ", insertedDate=" + insertedDate +
-                ", updatedDate=" + updatedDate +
-                '}';
+        return name;
     }
 }

@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +20,7 @@ import java.util.Map;
 import mobi.dende.simpletimesheet.data.TimesheetContact;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.model.ProjectDetail;
+import mobi.dende.simpletimesheet.model.ProjectExport;
 import mobi.dende.simpletimesheet.model.Task;
 import mobi.dende.simpletimesheet.model.Timer;
 
@@ -383,5 +385,68 @@ public class TimesheetManager {
         detail.setMonths(hours);
 
         return detail;
+    }
+
+    public static ProjectExport getProjectExportDetail(Context context, ProjectExport projectExport){
+        if(projectExport != null){
+            Uri uri = TimesheetContact.Timers.buildProjectAndDateUri(
+                    projectExport.getProject().getId(),
+                    projectExport.getStartDate().getTime(),
+                    projectExport.getEndDate().getTime() );
+
+            Log.d("TimesheetManager", "Uri: " + uri.toString());
+
+            final Cursor cursor = context.getContentResolver().query(
+                    uri,
+                    TimesheetContact.Timers.PROJECTION,
+                    null,
+                    null,
+                    null);
+
+            if((cursor != null) && cursor.moveToFirst()){
+                Log.d("TimesheetManager", "cursor size: " + cursor.getCount());
+                List<Timer> list = new ArrayList<>();
+                Map<Long, Task> tasks = new HashMap<>();
+                Project project = getProjectById(context, cursor.getLong(1));
+                Task task;
+                Timer timer;
+                long totalMinutes = 0;
+                do{
+                    long start = cursor.getLong(3);
+                    long end = cursor.getLong(4);
+                    totalMinutes += ((end-start) / 60000);
+                    task = tasks.get(cursor.getLong(2));
+                    if(task == null){
+                        task = getTaskById(context, cursor.getLong(2));
+                        if(task != null){
+                            tasks.put(task.getId(), task);
+                            task.setProject(project);
+                        }
+                    }
+
+                    timer = new Timer();
+                    timer.setId(cursor.getLong(0));
+                    timer.setStartTime(new Date(start));
+                    timer.setEndTime(new Date(end));
+                    timer.setTask(task);
+
+                    list.add(timer);
+                }
+                while(cursor.moveToNext());
+
+                Log.d("TimesheetManager", "Total count size: " + totalMinutes);
+
+                cursor.close();
+
+                projectExport.setTimers(list);
+                projectExport.setTotalHours((int)(totalMinutes / 60));
+            }
+            else {
+                Log.d("TimesheetManager", "Cursor is null ou empty.");
+            }
+
+        }
+
+        return projectExport;
     }
 }

@@ -111,9 +111,10 @@ public class TimesheetProvider extends ContentProvider {
                 break;
             case TIMER_PROJECT_AND_DATE:
                 if( uri.getPathSegments().size() > 3 ){
-                    sqlBuilder.appendWhere(TimesheetContact.Timers.COLUMN_PROJECT_ID + " = " + uri.getPathSegments().get(1));
-                    sqlBuilder.appendWhere(TimesheetContact.Timers.COLUMN_START_DATE + " = " + uri.getPathSegments().get(2));
-                    sqlBuilder.appendWhere(TimesheetContact.Timers.COLUMN_END_DATE + " = " + uri.getPathSegments().get(3));
+                    sqlBuilder.appendWhere(TimesheetContact.Timers.COLUMN_PROJECT_ID + " = " + uri.getPathSegments().get(1) + " AND ");
+                    sqlBuilder.appendWhere(TimesheetContact.Timers.COLUMN_START_DATE + " >= " + uri.getPathSegments().get(2) + " AND ");
+                    sqlBuilder.appendWhere(TimesheetContact.Timers.COLUMN_END_DATE + " <= " + uri.getPathSegments().get(3) + " AND ");
+                    sqlBuilder.appendWhere(TimesheetContact.Timers.COLUMN_END_DATE + " IS NOT NULL ");
                 }
                 sqlBuilder.setTables(TimesheetContact.Timers.TABLE_NAME);
                 cursor = sqlBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);

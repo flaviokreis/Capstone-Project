@@ -141,6 +141,14 @@ public class TimesheetContact {
         public static Uri buildtUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+
+        public static Uri buildProjectAndDateUri(long projectId, long startDate, long endDate){
+            return CONTENT_URI.buildUpon()
+                    .appendPath(String.valueOf(projectId))
+                    .appendPath(String.valueOf(startDate))
+                    .appendPath(String.valueOf(endDate))
+                    .build();
+        }
     }
 
 }

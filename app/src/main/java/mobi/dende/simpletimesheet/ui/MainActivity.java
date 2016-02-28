@@ -29,6 +29,8 @@ import mobi.dende.simpletimesheet.R;
 import mobi.dende.simpletimesheet.controller.TimesheetManager;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.model.Task;
+import mobi.dende.simpletimesheet.ui.dialog.CreateProjectDialog;
+import mobi.dende.simpletimesheet.ui.dialog.CreateTaskDialog;
 import mobi.dende.simpletimesheet.ui.fragment.ProjectDetailsFragment;
 import mobi.dende.simpletimesheet.ui.fragment.ProjectListFragment;
 

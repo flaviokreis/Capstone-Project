@@ -13,9 +13,9 @@
     <string name="pref_title_currency">Currency</string>
     <string-array name="pref_currency_list_titles">
         <item>Dollar - $</item>
-        <item>Euro</item>
-        <item>British Pound - €</item>
-        <item>Indian Rupee - £</item>
+        <item>Euro - €</item>
+        <item>British Pound - £</item>
+        <item>Indian Rupee - ₹</item>
         <item>Swiss Franc - CHF</item>
     </string-array>
     <string-array name="pref_currency_list_values">
@@ -24,28 +24,6 @@
         <item>£</item>
         <item>₹</item>
         <item>CHF</item>
-    </string-array>
-
-    <string name="pref_title_decimal_symbol">Decimal Symbol</string>
-    <string-array name="pref_decimal_symbol_list_titles">
-        <item>Coma (,)</item>
-        <item>Point (.)</item>
-        <item>Space (&#160;)</item>
-    </string-array>
-    <string-array name="pref_decimal_symbol_list_values">
-        <item>,</item>
-        <item>.</item>
-        <item>&#160;</item>
-    </string-array>
-
-    <string name="pref_date_format_symbol">Date format</string>
-    <string-array name="pref_date_format_list_titles">
-        <item>Month / Day / Year</item>
-        <item>Day / Month / Year</item>
-    </string-array>
-    <string-array name="pref_date_format_list_values">
-        <item>0</item>
-        <item>1</item>
     </string-array>
 
     <string name="pref_title_show_notification">Show notification</string>
@@ -84,4 +62,7 @@
     <string name="info_start_time">Click to start a task</string>
     <string name="add_new_task">+ Add Task</string>
     <string name="task_duration">Duration: %1$s</string>
+    <string name="resume">Resume</string>
+    <string name="total_hours">Total Hours: %1$s Hours</string>
+    <string name="export_hour">Hour: %1$s%2$.02f</string>
 </resources>

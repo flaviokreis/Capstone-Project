@@ -10,6 +10,8 @@
         <item name="android:textColorPrimary">@color/primaryText</item>
         <item name="android:textColorSecondary">@color/secondaryText</item>
         <item name="android:divider">@color/dividerColor</item>
+
+        <item name="android:buttonStyle">@style/BrandButtonStyle</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -17,6 +19,11 @@
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="BrandButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
 
     <style name="Projects" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:textColorPrimary">@color/primaryText</item>

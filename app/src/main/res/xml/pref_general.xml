@@ -9,24 +9,6 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
 
-    <ListPreference
-        android:key="decimal_symbol"
-        android:title="@string/pref_title_decimal_symbol"
-        android:entries="@array/pref_decimal_symbol_list_titles"
-        android:entryValues="@array/pref_decimal_symbol_list_values"
-        android:defaultValue=","
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null" />
-
-    <ListPreference
-        android:key="date_format"
-        android:title="@string/pref_date_format_symbol"
-        android:entries="@array/pref_date_format_list_titles"
-        android:entryValues="@array/pref_date_format_list_values"
-        android:defaultValue="0"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null" />
-
     <SwitchPreference
         android:key="show_notification"
         android:title="@string/pref_title_show_notification"
