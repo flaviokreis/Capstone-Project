@@ -54,4 +54,11 @@ public class Utils {
 
         return R.style.AppTheme_NoActionBar;
     }
+
+    public static String getHourByMinute(int minutes){
+        int hour = minutes / 60;
+        int minute = minutes % 60;
+
+        return String.format("%02d:%02d", hour, minute);
+    }
 }

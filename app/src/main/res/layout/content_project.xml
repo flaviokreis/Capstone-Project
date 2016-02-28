@@ -243,14 +243,14 @@
             android:paddingRight="16dp"/>
 
         <TextView
+            android:id="@+id/project_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:text="Adfald aldfkj asldf jasldfkj aslfk aslaks dfjalsk falskdf jalskdf alskd fjaslkd flk asjdflas jflaks df"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     </LinearLayout>
 

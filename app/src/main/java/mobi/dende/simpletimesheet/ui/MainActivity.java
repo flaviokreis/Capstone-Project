@@ -30,7 +30,7 @@ import mobi.dende.simpletimesheet.controller.TimesheetManager;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.model.Task;
 import mobi.dende.simpletimesheet.ui.fragment.ProjectDetailsFragment;
-import mobi.dende.simpletimesheet.ui.fragment.ProjectFragment;
+import mobi.dende.simpletimesheet.ui.fragment.ProjectListFragment;
 
 public class MainActivity extends AppCompatActivity implements OnProjectScreenListener {
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
 
     private static final String KEY_TASK = "task";
 
-    private ProjectFragment mProjectFragment;
+    private ProjectListFragment mProjectListFragment;
 
     private Toolbar mToolbar;
     private FloatingActionButton mFab;
@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
         PreferenceManager.setDefaultValues(MainActivity.this, R.xml.pref_general, false);
 
         if(savedInstanceState == null){
-            mProjectFragment = new ProjectFragment();
+            mProjectListFragment = new ProjectListFragment();
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_content, mProjectFragment)
+                    .add(R.id.main_content, mProjectListFragment)
                     .commit();
         }
 
@@ -247,8 +247,8 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
     }
 
     private void restartProjects(){
-        if(mProjectFragment != null){
-            mProjectFragment.restartProjects();
+        if(mProjectListFragment != null){
+            mProjectListFragment.restartProjects();
         }
     }
 
@@ -401,8 +401,8 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             if(result != null){
                 mPlayedTimer = result;
                 showTimer();
-                if(mProjectFragment != null){
-                    mProjectFragment.notifyChange();
+                if(mProjectListFragment != null){
+                    mProjectListFragment.notifyChange();
                 }
             }
         }

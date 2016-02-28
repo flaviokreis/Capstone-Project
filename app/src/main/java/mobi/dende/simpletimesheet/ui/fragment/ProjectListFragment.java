@@ -23,7 +23,7 @@ import mobi.dende.simpletimesheet.ui.adapter.ProjectAdapter;
 /**
  * Manage part of screen about Projects and Tasks
  */
-public class ProjectFragment extends Fragment implements ExpandableListView.OnGroupClickListener,
+public class ProjectListFragment extends Fragment implements ExpandableListView.OnGroupClickListener,
         ExpandableListView.OnChildClickListener{
 
     private ExpandableListView mListView;
@@ -55,8 +55,8 @@ public class ProjectFragment extends Fragment implements ExpandableListView.OnGr
         mAdapter.setListener(mMainListener);
 
         mListView.setAdapter(mAdapter);
-        mListView.setOnGroupClickListener(ProjectFragment.this);
-        mListView.setOnChildClickListener(ProjectFragment.this);
+        mListView.setOnGroupClickListener(ProjectListFragment.this);
+        mListView.setOnChildClickListener(ProjectListFragment.this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mListView.setNestedScrollingEnabled(true);
