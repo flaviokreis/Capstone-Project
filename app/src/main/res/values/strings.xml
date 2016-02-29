@@ -65,4 +65,5 @@
     <string name="resume">Resume</string>
     <string name="total_hours">Total Hours: %1$s Hours</string>
     <string name="export_hour">Hour: %1$s%2$.02f</string>
+    <string name="export_dialog">Exporting...</string>
 </resources>

@@ -1,12 +1,17 @@
 package mobi.dende.simpletimesheet.ui.fragment;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +19,23 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import jxl.write.WriteException;
 import mobi.dende.simpletimesheet.R;
 import mobi.dende.simpletimesheet.controller.TimesheetManager;
+import mobi.dende.simpletimesheet.conveter.ExportListener;
+import mobi.dende.simpletimesheet.conveter.ProjectExportExcel;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.model.ProjectExport;
 import mobi.dende.simpletimesheet.ui.dialog.DatePickerFragment;
@@ -36,6 +47,8 @@ public class ExportFragment extends Fragment implements View.OnClickListener, Ad
 
     private static final String STATE_PROJECTS = "state_projects";
     private static final String STATE_PROJECT_DETAIL = "state_project_detail";
+
+    private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 201;
 
     private Spinner projectSpinner;
     private TextView exportFrom;
@@ -53,6 +66,8 @@ public class ExportFragment extends Fragment implements View.OnClickListener, Ad
 
     private SharedPreferences mPrefs;
     private DateFormat mDateFormat;
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -140,6 +155,14 @@ public class ExportFragment extends Fragment implements View.OnClickListener, Ad
             new GetProjectDetail().execute(mProjectExport);
         }
         else{
+            Project proj;
+            for(int i = 0; i < mProjects.size(); i++){
+                proj = mProjects.get(i);
+                if(proj.getId() == mProjectExport.getProject().getId()){
+                    projectSpinner.setSelection(i);
+                    break;
+                }
+            }
             updateLayout();
         }
     }
@@ -202,7 +225,40 @@ public class ExportFragment extends Fragment implements View.OnClickListener, Ad
             datePickerFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
         }
         else if(v.getId() == R.id.export_btn){
+            if (ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
 
+                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                } else {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            REQUEST_WRITE_EXTERNAL_STORAGE);
+                }
+            }
+            else{
+                mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.export_dialog), true);
+                new ExportAsync().execute(mProjectExport);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_WRITE_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.export_dialog), true);
+                    new ExportAsync().execute(mProjectExport);
+
+                }
+                return;
+            }
         }
     }
 
@@ -218,6 +274,10 @@ public class ExportFragment extends Fragment implements View.OnClickListener, Ad
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void onSaveDone( ){
+        mProgressDialog.dismiss();
     }
 
     private class ProjectsAsync extends AsyncTask<Void, Void, List<Project>> {
@@ -253,6 +313,53 @@ public class ExportFragment extends Fragment implements View.OnClickListener, Ad
                 mProjectExport = projectExport;
                 updateLayout();
             }
+        }
+    }
+
+    private class ExportAsync extends AsyncTask<ProjectExport, Integer, Void> {
+        @Override
+        protected Void doInBackground(ProjectExport... params) {
+            try{
+                SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_kk_mm_ss_", Locale.getDefault());
+                ProjectExportExcel export = new ProjectExportExcel(getActivity(),
+                        format.format(new Date()) + "timesheet_export.xls", params[0].getTimers() );
+
+                export.addListener( new ExportListener() {
+                    @Override
+                    public void onProgress(int value, int total) {
+                        onProgressUpdate(value);
+                    }
+
+                    @Override
+                    public void onDone( String savedFile ) {
+                        onSaveDone();
+                    }
+
+                    @Override
+                    public void onError() {
+                        onSaveDone();
+                    }
+                });
+
+                export.write();
+            }
+            catch (WriteException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
         }
     }
 }
