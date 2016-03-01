@@ -50,7 +50,8 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:layout_alignParentBottom="true"
                             android:singleLine="true"
-                            android:text="@string/info_start_time"/>
+                            android:text="@string/info_start_time"
+                            android:contentDescription="@string/click_task_description"/>
 
                         <TextView
                             android:id="@+id/toolbar_task_name"
@@ -61,7 +62,6 @@
                             android:layout_marginBottom="16dp"
                             android:layout_marginRight="16dp"
                             android:singleLine="true"
-                            android:text="Task name"
                             android:visibility="invisible"/>
 
                         <LinearLayout
@@ -96,8 +96,11 @@
 
             <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_margin="@dimen/fab_margin" app:layout_anchor="@id/app_bar"
-                app:layout_anchorGravity="bottom|end" android:src="@drawable/ic_add_white_48dp" />
+                android:layout_margin="@dimen/fab_margin"
+                app:layout_anchor="@id/app_bar"
+                app:layout_anchorGravity="bottom|end"
+                android:src="@drawable/ic_add_white_48dp"
+                android:contentDescription="@string/insert_new_project_description"/>
 
         </android.support.design.widget.CoordinatorLayout>
 

@@ -32,7 +32,8 @@
         android:layout_gravity="center"
         app:borderColorSelected="@color/colorAccent"
         app:borderColor="@android:color/transparent"
-        android:entries="@array/rainbow"/>
+        android:entries="@array/rainbow"
+        android:contentDescription="@string/select_color_description"/>
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,7 +50,8 @@
             android:inputType="number"
             android:singleLine="true"
             android:imeOptions="actionNext"
-            android:hint="@string/hint_money"/>
+            android:hint="@string/hint_money"
+            android:contentDescription="@string/value_hour_description"/>
 
         <TextView
             android:layout_width="wrap_content"

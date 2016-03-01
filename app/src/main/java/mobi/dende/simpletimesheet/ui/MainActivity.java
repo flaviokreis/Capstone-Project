@@ -296,7 +296,9 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             mTaskName.setVisibility(View.VISIBLE);
 
             mProjectName.setText(mPlayedTimer.getTask().getProject().getName());
+            mProjectName.setText(String.format(getString(R.string.started_project_description), mPlayedTimer.getTask().getProject().getName()));
             mTaskName.setText(mPlayedTimer.getTask().getName());
+            mProjectName.setText(String.format(getString(R.string.started_task_description), mPlayedTimer.getTask().getProject().getName()));
 
             doAsynchronousTask = new TimerTask() {
                 @Override
@@ -314,25 +316,31 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
                                     long size = (actualTime - insertedTime) / 1000;
 
                                     String value = "";
+                                    String contentDescription = "";
 
                                     if (size > 0 && size < 60) {
                                         value = String.format("%02ds", (int) size);
+                                        contentDescription = String.format(getString(R.string.duration_seconds_description), (int) size);
                                     } else if (size < 86400) {
                                         int hour = (int) (size / 3600);
                                         int minute = (int) (size % 3600) / 60;
 
                                         value = String.format("%02d:%02d", hour, minute);
+                                        contentDescription = String.format(getString(R.string.duration_hours_description), hour, minute);
                                     } else if (size >= 86400) {
                                         int day = (int) (size / 86400);
 
                                         if (day == 1) {
                                             value = String.format("%2d day", day);
+                                            contentDescription = String.format(getString(R.string.duration_day_description), day);
                                         } else {
                                             value = String.format("%2d days", day);
+                                            contentDescription = String.format(getString(R.string.duration_days_descrition), day);
                                         }
                                     }
 
                                     mDuration.setText(String.format(getString(R.string.task_duration), value));
+                                    mDuration.setText(contentDescription);
                                 }
                                 else {
 
@@ -353,6 +361,7 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             mTaskName.setVisibility(View.INVISIBLE);
 
             mProjectName.setText(R.string.info_start_time);
+            mProjectName.setContentDescription(getString(R.string.click_task_description));
             mTaskName.setText("");
             mDuration.setText("");
         }

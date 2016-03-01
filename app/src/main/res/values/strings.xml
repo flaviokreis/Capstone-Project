@@ -65,5 +65,28 @@
     <string name="resume">Resume</string>
     <string name="total_hours">Total Hours: %1$s Hours</string>
     <string name="export_hour">Hour: %1$s%2$.02f</string>
-    <string name="export_dialog">Exporting...</string>
+    <string name="export_dialog">Exporting…</string>
+
+    <string name="insert_new_project_description">Insert new project</string>
+    <string name="click_task_description">Click in a Task to start</string>
+    <string name="started_project_description">Project, %1$s</string>
+    <string name="started_task_description">Started task, %1$s</string>
+    <string name="duration_seconds_description">Duration, %1$d Seconds</string>
+    <string name="duration_hours_description">Duration, %1$d hours and %2$d minutes</string>
+    <string name="duration_day_description">Duration, %1$d day</string>
+    <string name="duration_days_descrition">Duration, %1$d days</string>
+    <string name="project_description">Project, %1$s</string>
+    <string name="task_description">Task, %1$s</string>
+    <string name="click_to_pause_description">Click to pause</string>
+    <string name="select_color_description">Select a color</string>
+    <string name="value_hour_description">Value per hour</string>
+    <string name="hours_today_description">%1$s hours today</string>
+    <string name="hours_week_description">%1$s hours this week</string>
+    <string name="hours_month_description">%1$s hours this month</string>
+    <string name="earn_hour_description">Earn %1$f per hour</string>
+    <string name="earn_month_description">Earn %1$f this month</string>
+    <string name="earn_total_description">Earn %1$f total</string>
+    <string name="project_chart_description">Show worked hours per month</string>
+    <string name="select_project_description">Select a project</string>
+    <string name="click_export_description">Click to export</string>
 </resources>

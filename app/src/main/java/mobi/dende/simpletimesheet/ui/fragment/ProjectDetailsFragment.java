@@ -169,15 +169,26 @@ public class ProjectDetailsFragment extends Fragment{
 
         mProjectDetail = projectDetail;
 
-        hourToday.setText(Utils.getHourByMinute((int)mProjectDetail.getMinutesToday()));
-        hourWeek.setText(Utils.getHourByMinute((int)mProjectDetail.getMinutesWeek()));
+        hourToday.setText(Utils.getHourByMinute((int) mProjectDetail.getMinutesToday()));
+        hourToday.setContentDescription(String.format(getActivity().getString(R.string.hours_today_description),
+                Utils.getHourByMinute((int) mProjectDetail.getMinutesToday())));
+
+        hourWeek.setText(Utils.getHourByMinute((int) mProjectDetail.getMinutesWeek()));
+        hourWeek.setContentDescription(String.format(getActivity().getString(R.string.hours_week_description),
+                Utils.getHourByMinute((int) mProjectDetail.getMinutesWeek())));
+
         hourMonth.setText(Utils.getHourByMinute((int) mProjectDetail.getMinutesMonth()));
+        hourMonth.setContentDescription(String.format(getActivity().getString(R.string.hours_month_description),
+                Utils.getHourByMinute((int) mProjectDetail.getMinutesMonth())));
 
         String coin = mPrefs.getString("currency", "$");
 
         moneyHour.setText(String.format("%s %.02f", coin, mProjectDetail.getEarnPerHour()));
+        moneyHour.setContentDescription(String.format(getActivity().getString(R.string.earn_hour_description), mProjectDetail.getEarnPerHour()));
         moneyMonth.setText(String.format("%s %.02f", coin, mProjectDetail.getEarnMonth()));
+        moneyHour.setContentDescription(String.format(getActivity().getString(R.string.earn_month_description), mProjectDetail.getEarnMonth()));
         moneyTotal.setText(String.format("%s %.02f", coin, mProjectDetail.getEarnTotal()));
+        moneyHour.setContentDescription(String.format(getActivity().getString(R.string.earn_total_description), mProjectDetail.getEarnTotal()));
 
         description.setText(mProjectDetail.getProject().getDescription());
 

@@ -126,6 +126,7 @@ public class ProjectAdapter extends BaseExpandableListAdapter {
         mExpandableListView.expandGroup(groupPosition);
 
         viewHolder.title.setText(getGroup(groupPosition).getName());
+        viewHolder.title.setContentDescription(String.format(mContext.getString(R.string.project_description), getGroup(groupPosition).getName()));
 
         return convertView;
     }
@@ -155,6 +156,7 @@ public class ProjectAdapter extends BaseExpandableListAdapter {
         Task task = getChild(groupPosition, childPosition);
 
         viewHolder.title.setText(task.getName());
+        viewHolder.title.setContentDescription(String.format(mContext.getString(R.string.task_description), task.getName()));
 
         if((mListener != null) && (mListener.isPlayedTaskId() != 0) && (mListener.isPlayedTaskId() == task.getId())){
             viewHolder.title.setTextColor(task.getColor());

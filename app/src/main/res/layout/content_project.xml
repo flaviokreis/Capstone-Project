@@ -25,7 +25,8 @@
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/chart"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height" />
+            android:layout_height="@dimen/app_bar_height"
+            android:contentDescription="@string/project_chart_description"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -53,8 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:text="5:27"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,8 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:text="29:32"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -114,8 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:text="68:42"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -156,8 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:text="$30"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -187,8 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:text="$1560"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -217,8 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:text="$10560"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
                 <TextView
                     android:layout_width="wrap_content"

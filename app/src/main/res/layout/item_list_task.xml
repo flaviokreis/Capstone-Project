@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_pause_circle_outline_black_24dp"
+        android:contentDescription="@string/click_to_pause_description"
         android:paddingRight="@dimen/abc_list_item_padding_horizontal_material"
         android:visibility="invisible"/>
 
