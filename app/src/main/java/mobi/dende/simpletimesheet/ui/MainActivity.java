@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
                                     }
 
                                     mDuration.setText(String.format(getString(R.string.task_duration), value));
-                                    mDuration.setText(contentDescription);
+                                    mDuration.setContentDescription(contentDescription);
                                 }
                                 else {
 
