@@ -20,12 +20,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import mobi.dende.simpletimesheet.R;
+import mobi.dende.simpletimesheet.SimpleTimesheetApplication;
 import mobi.dende.simpletimesheet.controller.TimesheetManager;
 import mobi.dende.simpletimesheet.model.Project;
 import mobi.dende.simpletimesheet.model.Task;
@@ -94,6 +97,12 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
                 ((CreateProjectDialog)dialog).setListener(new CreateProjectDialog.OnCreateProjectListener() {
                     @Override
                     public void onCreateProject(Project project) {
+                        SimpleTimesheetApplication app = (SimpleTimesheetApplication)getApplication();
+                        app.getDefaultTracker().send(new HitBuilders.EventBuilder()
+                                .setCategory("Project")
+                                .setAction("Play")
+                                .build());
+
                         new SaveProjectAsync().execute(project);
                     }
                 });
@@ -231,6 +240,12 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             ((CreateTaskDialog) dialog).setListener(new CreateTaskDialog.OnCreateTaskListener() {
                 @Override
                 public void onCreateTask(Task saveTask) {
+                    SimpleTimesheetApplication app = (SimpleTimesheetApplication)getApplication();
+                    app.getDefaultTracker().send(new HitBuilders.EventBuilder()
+                            .setCategory("Task")
+                            .setAction("Save")
+                            .build());
+
                     saveTask.setProject(task.getProject());
                     new SaveTaskAsync().execute(saveTask);
                 }
@@ -300,6 +315,12 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             mTaskName.setText(mPlayedTimer.getTask().getName());
             mTaskName.setContentDescription(String.format(getString(R.string.started_task_description), mPlayedTimer.getTask().getProject().getName()));
 
+            SimpleTimesheetApplication app = (SimpleTimesheetApplication)getApplication();
+            app.getDefaultTracker().send(new HitBuilders.EventBuilder()
+                    .setCategory("Task")
+                    .setAction("Play")
+                    .build());
+
             doAsynchronousTask = new TimerTask() {
                 @Override
                 public void run() {
@@ -355,6 +376,12 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             timer.schedule(doAsynchronousTask, 1000, 1000);
         }
         else{
+            SimpleTimesheetApplication app = (SimpleTimesheetApplication)getApplication();
+            app.getDefaultTracker().send(new HitBuilders.EventBuilder()
+                    .setCategory("Task")
+                    .setAction("Stop")
+                    .build());
+
             mCollapsingBar.setBackgroundResource(R.color.colorPrimary);
 
             mDuration.setVisibility(View.INVISIBLE);
