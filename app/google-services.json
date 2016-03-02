@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_id": "simple-timesheet-1238",
+    "project_number": "504910965323",
+    "name": "Simple Timesheet"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504910965323:android:eb2e203e3d2e7f51",
+        "client_id": "android:mobi.dende.simpletimesheet",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "mobi.dende.simpletimesheet",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-74623928-1"
+          }
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
