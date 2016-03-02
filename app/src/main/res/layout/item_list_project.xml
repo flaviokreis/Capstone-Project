@@ -9,10 +9,10 @@
 
     <TextView
         android:id="@+id/project_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center_vertical"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
 </LinearLayout>

@@ -14,7 +14,7 @@
     tools:context="mobi.dende.simpletimesheet.ui.ExportActivity">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:text="@string/project"/>
@@ -27,7 +27,7 @@
         android:contentDescription="@string/select_project_description"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -85,26 +85,26 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/bg_export_resume"
-        android:paddingTop="8dp"
+        android:paddingTop="16dp"
         android:paddingBottom="8dp"
         android:paddingLeft="12dp"
         android:paddingRight="12dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:text="@string/resume"/>
 
         <TextView
             android:id="@+id/export_total_hours"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"/>
 
         <TextView
             android:id="@+id/export_value_hour"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"/>
 

@@ -296,9 +296,9 @@ public class MainActivity extends AppCompatActivity implements OnProjectScreenLi
             mTaskName.setVisibility(View.VISIBLE);
 
             mProjectName.setText(mPlayedTimer.getTask().getProject().getName());
-            mProjectName.setText(String.format(getString(R.string.started_project_description), mPlayedTimer.getTask().getProject().getName()));
+            mProjectName.setContentDescription(String.format(getString(R.string.started_project_description), mPlayedTimer.getTask().getProject().getName()));
             mTaskName.setText(mPlayedTimer.getTask().getName());
-            mProjectName.setText(String.format(getString(R.string.started_task_description), mPlayedTimer.getTask().getProject().getName()));
+            mTaskName.setContentDescription(String.format(getString(R.string.started_task_description), mPlayedTimer.getTask().getProject().getName()));
 
             doAsynchronousTask = new TimerTask() {
                 @Override
