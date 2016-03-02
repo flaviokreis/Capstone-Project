@@ -29,6 +29,9 @@ public class SimpleTimesheetApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Stetho.initializeWithDefaults(this);
+
+        if(BuildConfig.DEBUG_MODE){
+            Stetho.initializeWithDefaults(this);
+        }
     }
 }
