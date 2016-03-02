@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -115,6 +116,8 @@ public class TimesheetManager {
                     TimesheetContact.Projects._ID + " ? ",
                     new String[]{String.valueOf(project.getId())});
 
+            updateWidgets(context);
+
             return updateResult > 0;
         }
         else{
@@ -122,8 +125,17 @@ public class TimesheetManager {
 
             Uri result = contentResolver.insert(TimesheetContact.Projects.CONTENT_URI, values);
 
+            updateWidgets(context);
+
             return result != null;
         }
+    }
+
+    private static void updateWidgets(Context context) {
+        // Setting the package ensures that only components in our app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(TimesheetContact.Projects.ACTION_PROJECT_UPDATED)
+                .setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 
     public static void removeProject(@NonNull Context context, @NonNull Project project){

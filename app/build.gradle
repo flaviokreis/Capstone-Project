@@ -5,14 +5,6 @@ repositories {
 }
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'timesheet'
-            keyPassword '123456'
-            storeFile file('../../timesheet.jks')
-            storePassword '123456'
-        }
-    }
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
     defaultConfig {
@@ -22,12 +14,20 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        config {
+            keyAlias 'timesheet'
+            keyPassword '123456'
+            storeFile file('../timesheet.jks')
+            storePassword '123456'
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "DEBUG_MODE", "false"
-            signingConfig signingConfigs.config
         }
         debug {
             buildConfigField "boolean", "DEBUG_MODE", "true"

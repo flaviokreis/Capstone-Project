@@ -91,4 +91,7 @@
     <string name="project_chart_description">Show worked hours per month</string>
     <string name="select_project_description">Select a project</string>
     <string name="click_export_description">Click to export</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_project">Project is empty</string>
 </resources>

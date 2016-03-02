@@ -40,6 +40,8 @@ public class TimesheetContact {
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PROJECT;
 
+        public static final String ACTION_PROJECT_UPDATED = "mobi.dende.simpletimesheet.UPDATED_PROJECT";
+
         public static final String TABLE_NAME = "project";
 
         public static final String COLUMN_NAME = "name";
