@@ -32,8 +32,7 @@
         android:layout_gravity="center"
         app:borderColorSelected="@color/colorAccent"
         app:borderColor="@android:color/transparent"
-        android:entries="@array/rainbow"
-        android:contentDescription="@string/select_color_description"/>
+        android:entries="@array/rainbow" />
     
     <LinearLayout
         android:layout_width="match_parent"

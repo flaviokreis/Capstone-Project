@@ -22,6 +22,9 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -107,6 +110,10 @@ public class ExportFragment extends Fragment implements View.OnClickListener, Ad
 
         exportBtn = (Button) view.findViewById(R.id.export_btn);
         exportBtn.setOnClickListener(ExportFragment.this);
+
+        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         return view;
     }
