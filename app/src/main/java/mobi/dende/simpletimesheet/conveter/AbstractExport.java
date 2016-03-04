@@ -41,7 +41,7 @@ public abstract class AbstractExport implements ExportListener {
     private List<? extends Object> list;
     private List<ExportListener> listeners;
 
-    private Map<Integer, Integer> collumnSizes;
+    private Map<Integer, Integer> columnSizes;
 
     private Context mContext;
     private DateFormat mDateFormat;
@@ -54,7 +54,7 @@ public abstract class AbstractExport implements ExportListener {
         mDateFormat = android.text.format.DateFormat.getMediumDateFormat(mContext);
 
         listeners    = new ArrayList<>();
-        collumnSizes = new HashMap<>();
+        columnSizes = new HashMap<>();
 
         this.sheetName = sheetName;
         this.inputFile = inputFile;
@@ -107,7 +107,7 @@ public abstract class AbstractExport implements ExportListener {
         WritableSheet excelSheet = workbook.createSheet( sheetName, 0 );
         createLabel(excelSheet);
         createContent(excelSheet);
-        updateSheetCollumnWidth(excelSheet);
+        updateSheetColumnWidth(excelSheet);
 
         workbook.write();
         workbook.close();
@@ -122,9 +122,9 @@ public abstract class AbstractExport implements ExportListener {
 
     abstract void createContent(WritableSheet sheet) throws WriteException;
 
-    private void updateSheetCollumnWidth(WritableSheet sheet){
-        for( Integer collumn : collumnSizes.keySet() ){
-            sheet.setColumnView( collumn, (int)( collumnSizes.get( collumn ) * 1.5f ) );
+    private void updateSheetColumnWidth(WritableSheet sheet){
+        for( Integer column : columnSizes.keySet() ){
+            sheet.setColumnView( column, (int)( columnSizes.get( column ) * 1.5f ) );
         }
     }
 
@@ -132,7 +132,7 @@ public abstract class AbstractExport implements ExportListener {
         Label label;
         label = new Label( column, row, s, timesBoldUnderline );
         sheet.addCell( label );
-        collumnSizes.put( column, s.length() );
+        columnSizes.put(column, s.length());
     }
 
     void addLabel(WritableSheet sheet, int column, int row, String s) throws WriteException {
@@ -140,14 +140,14 @@ public abstract class AbstractExport implements ExportListener {
         label = new Label(column, row, s, times);
         sheet.addCell(label);
         int width = s.length();
-        if( collumnSizes.containsKey( column ) ){
-            int actualValue = collumnSizes.get( column );
+        if( columnSizes.containsKey( column ) ){
+            int actualValue = columnSizes.get( column );
             if( width > actualValue ){
-                collumnSizes.put( column, width );
+                columnSizes.put( column, width );
             }
         }
         else{
-            collumnSizes.put( column, width );
+            columnSizes.put( column, width );
         }
     }
 
@@ -168,14 +168,14 @@ public abstract class AbstractExport implements ExportListener {
         label = new Label(column, row, value, times);
         sheet.addCell(label);
         int width = value.length();
-        if( collumnSizes.containsKey( column ) ){
-            int actualValue = collumnSizes.get( column );
+        if( columnSizes.containsKey( column ) ){
+            int actualValue = columnSizes.get( column );
             if( width > actualValue ){
-                collumnSizes.put( column, width );
+                columnSizes.put( column, width );
             }
         }
         else{
-            collumnSizes.put( column, width );
+            columnSizes.put( column, width );
         }
     }
 
@@ -185,20 +185,20 @@ public abstract class AbstractExport implements ExportListener {
         label = new Label(column, row, value, times);
         sheet.addCell(label);
         int width = value.length();
-        if( collumnSizes.containsKey( column ) ){
-            int actualValue = collumnSizes.get( column );
+        if( columnSizes.containsKey( column ) ){
+            int actualValue = columnSizes.get( column );
             if( width > actualValue ){
-                collumnSizes.put( column, width );
+                columnSizes.put( column, width );
             }
         }
         else{
-            collumnSizes.put( column, width );
+            columnSizes.put( column, width );
         }
     }
 
     @Override
     public void onProgress( int value, int total ){
-        if( listeners.isEmpty() == false ){
+        if( !listeners.isEmpty() ){
             for( ExportListener listener : listeners ){
                 listener.onProgress( value, total );
             }
@@ -207,7 +207,7 @@ public abstract class AbstractExport implements ExportListener {
 
     @Override
     public void onDone( String localSaved ){
-        if( listeners.isEmpty() == false ){
+        if( !listeners.isEmpty() ){
             for( ExportListener listener : listeners ){
                 listener.onDone( localSaved );
             }
@@ -216,7 +216,7 @@ public abstract class AbstractExport implements ExportListener {
 
     @Override
     public void onError(){
-        if( listeners.isEmpty() == false ){
+        if( !listeners.isEmpty() ){
             for( ExportListener listener : listeners ){
                 listener.onError();
             }
