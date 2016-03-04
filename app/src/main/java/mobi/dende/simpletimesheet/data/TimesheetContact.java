@@ -4,10 +4,9 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.text.format.Time;
 
 /**
- * Defines table and column names for the timesheet database.
+ * Defines table and column names for the timesheet provider.
  */
 public class TimesheetContact {
 
@@ -19,17 +18,9 @@ public class TimesheetContact {
     public static final String PATH_TASK    = "task";
     public static final String PATH_TIMER   = "timer";
 
-    // To make it easy to query for the exact date, we normalize all dates that go into
-    // the database to the start of the the Julian day at UTC.
-    public static long normalizeDate(long startDate) {
-        // normalize the start date to the beginning of the (UTC) day
-        Time time = new Time();
-        time.set(startDate);
-        int julianDay = Time.getJulianDay(startDate, time.gmtoff);
-        return time.setJulianDay(julianDay);
-    }
-
-    /* Inner class that defines the table contents of the project table */
+    /**
+     * Define table name, table columns and content uri to Projects.
+     */
     public static final class Projects implements BaseColumns {
 
         public static final Uri CONTENT_URI =
@@ -71,7 +62,9 @@ public class TimesheetContact {
         }
     }
 
-    /* Inner class that defines the table contents of the task table */
+    /**
+     * Define table name, table columns and content uri to Tasks.
+     */
     public static final class Tasks implements BaseColumns {
 
         public static final Uri CONTENT_URI =
@@ -111,7 +104,9 @@ public class TimesheetContact {
         }
     }
 
-    /* Inner class that defines the table contents of the timer table */
+    /**
+     * Define table name, table columns and content uri to Timers.
+     */
     public static final class Timers implements BaseColumns {
 
         public static final Uri CONTENT_URI =

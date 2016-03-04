@@ -11,6 +11,9 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
+/**
+ * Define content provider to manager Project, Tasks and Timers
+ */
 public class TimesheetProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
