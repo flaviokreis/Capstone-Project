@@ -26,7 +26,7 @@ import jxl.write.WriteException;
 import mobi.dende.simpletimesheet.util.Utils;
 
 /**
- * Created by flaviokreis on 28/02/16.
+ * Create fields do insert in Excel file and generate Excel file on finish to insert fields.
  */
 public abstract class AbstractExport implements ExportListener {
     private static final String TAG = "AbstractExport";
