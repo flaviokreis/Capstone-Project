@@ -8,3 +8,5 @@ Simple Timesheet allow manage projects, manage tasks and export your data to Mic
 ## Intended User
 
 Simple Timesheet is designed so that workers can manage their hours worked on projects and tasks. It can also be used by students who want to manage study time.
+
+![Add Project](https://github.com/flaviokreis/Capstone-Project/raw/master/screens/add_project.png)
